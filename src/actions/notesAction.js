@@ -30,7 +30,7 @@ export function getNotes(){
   }
 }
 
-export function saveNotes(note){
+export function saveNote(note){
   return dispatch => {
     database.push(note);
   }

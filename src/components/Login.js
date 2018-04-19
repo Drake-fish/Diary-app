@@ -1,48 +1,54 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { googleLogin, twitterLogin } from '../actions/userActions';
+
 class Login extends Component {
-  componentWillMount(){
-    const { user, history } = this.props;
-    if(user != null){
-      this.props.history.push('/');
+    componentWillMount() {
+        if (this.props.user !== null) {
+            // console.log(this.props.history);
+            this.props.history.push('/');
+        }
     }
-  }
-  componentWillReceiveProps(nextProps){
-    if (nextProps.user != null){
-      nextProps.history.push('/');
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.user !== null) {
+            nextProps.history.push('/');
+        }
     }
-  }
-  render(){
-    return (
-      <div className="container-fluid">
-        <div className="row text-center">
-          <div className="col-sm-12 jumbotron">
-            <h1>
-              DIARY | {new Date().getFullYear()} Login with your Favorite <b>Social Network</b>
-            </h1>
-          </div>
-          </div>
-          <div className="row">
-          <div className="col-sm-6">
-            <button onClick={this.props.googleLogin} className="btn btn-danger btn-lg">
-              Login with Google
-            </button>
-            <br/>
-            <button onClick={this.props.twitterLogin} className="btn btn-info btn-lg">
-              Login with Twitter
-            </button>
-        </div>
-        </div>
-      </div>
-    );
-  }
+
+    render() {
+        return (
+            <div className="container-fluid">
+                <div className="row">
+                    <div className="col-sm-12 jumbotron" style={{ marginTop: '-20px' }}>
+                        <h1>DIARY | {new Date().getFullYear()}</h1>
+                        <h2>
+                            <i>
+                                Login with your favourite <b>Social Network</b> to start writting!
+                            </i>
+                        </h2>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-sm-12">
+                        <button className="btn btn-danger col-sm-6" onClick={this.props.googleLogin}>
+                            Login with Google
+                        </button>
+
+                        <button className="btn btn-info col-sm-6" onClick={this.props.twitterLogin}>
+                            Login with Twitter
+                        </button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 }
 
-function mapStateToProps(state, ownProps){
-  return {
-    user: state.user
-  };
+function mapStateToProps(state, onwProps) {
+    return {
+        user: state.user
+    };
 }
 
-export default connect(mapStateToProps, { googleLogin, twitterLogin } )(Login);
+export default connect(mapStateToProps, { googleLogin, twitterLogin })(Login);
