@@ -2,10 +2,21 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import { Link } from 'react-router-dom';
 import SubmitComment from './SubmitComment';
+import _ from 'lodash';
+import Comment from './Comment';
 
 class NoteDetail extends Component {
+  renderComments(){
+    const { note } = this.props;
+    return _.map(note.comments, (comment,key) => {
+      return <Comment key={key} id={key}>
+                {comment.commentBody}
+             </Comment>
+    });
+  }
  render() {
    const {note} = this.props;
+   console.log('note id', this.props.match.params.id);
    return (
      <div className="container-fluid">
         <div className="row">
@@ -13,6 +24,7 @@ class NoteDetail extends Component {
             <h1>{note.title}</h1>
             <p>{note.body}</p>
             <SubmitComment id={this.props.match.params.id}/>
+            {this.renderComments()}
             <Link to='/'>Back</Link>
           </div>
         </div>

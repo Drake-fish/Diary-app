@@ -1,20 +1,16 @@
-import React, { Component } from 'react';
-import _ from 'lodash';
-import { connect } from 'react-redux';
-import { getNotes, saveNotes, deleteNote } from '../actions/notesAction';
-import { getUser } from '../actions/userActions';
-import NoteCard from './NoteCard';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import { Link } from 'react-router-dom';
+import { editNote } from '../actions/notesAction';
 
-class App extends Component {
+class NoteEdit extends Component {
 
   constructor(props){
     super(props);
     //state
     this.state={
-      title:'',
-      body:'',
-      notes:'',
+      title: this.props.note.title,
+      body:this.props.note.body,
     }
   }
 
@@ -28,39 +24,16 @@ class App extends Component {
     const note = {
         title: this.state.title,
         body: this.state.body,
-        uid: this.props.user.uid
+        uid: this.props.uid
     }
-    this.props.saveNotes(note);
+    this.props.editNote(this.props.match.params.id, note);
     this.setState({
       title:'',
       body:'',
-    })
-  }
-
-  //render posts
-  renderNotes = () => {
-    return _.map(this.props.notes, (note, key)=>{
-      return(
-        <NoteCard key={key}>
-          <Link to={`/${key}`}>
-            <h2>{note.title}</h2>
-            <h4>{note.body}</h4>
-          </Link>
-          { note.uid === this.props.user.uid && (
-            <div>
-              <button className="btn btn-danger btn-xs" onClick={()=>this.props.deleteNote(key)}>DELETE</button>
-              <Link to={`/${key}/edit`}>
-                <button className="btn btn-info btn-xs pull-right">Update</button>
-              </Link>
-            </div>
-        )}
-        </NoteCard>
-      )
     });
+    this.props.history.push('/');
   }
-
   render() {
-    console.log(this.props.user)
     return (
       <div className="container-fluid">
         <div className="row">
@@ -88,7 +61,6 @@ class App extends Component {
                 <button className="btn btn-primary col-sm-12">Submit</button>
               </div>
             </form>
-            { this.renderNotes() }
           </div>
         </div>
       </div>
@@ -98,9 +70,9 @@ class App extends Component {
 
 function mapStateToProps(state, ownProps){
   return {
-    notes: state.notes,
-    user: state.user
+    note: state.notes[ownProps.match.params.id],
+    uid: state.user.uid
   }
 }
 
-export default connect(mapStateToProps, {getNotes, saveNotes, deleteNote, getUser} )(App);
+export default connect(mapStateToProps, { editNote })(NoteEdit);

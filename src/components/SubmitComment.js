@@ -20,7 +20,7 @@ class SubmitComment extends Component{
       commentBody: this.state.commentBody,
       uid: this.props.uid
     }
-    this.props.SaveComment(this.props.uid, comment);
+    this.props.SaveComment(this.props.id, comment);
     this.setState({
       commentBody:''
     })

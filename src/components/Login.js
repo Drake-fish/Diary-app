@@ -22,16 +22,17 @@ class Login extends Component {
               DIARY | {new Date().getFullYear()} Login with your Favorite <b>Social Network</b>
             </h1>
           </div>
+          </div>
+          <div className="row">
           <div className="col-sm-6">
             <button onClick={this.props.googleLogin} className="btn btn-danger btn-lg">
               Login with Google
             </button>
-          </div>
-          <div className="col-sm-6">
-            <button onClick={this.props.twitterLogin} className="btn btn-success btn-lg">
+            <br/>
+            <button onClick={this.props.twitterLogin} className="btn btn-info btn-lg">
               Login with Twitter
             </button>
-          </div>
+        </div>
         </div>
       </div>
     );

@@ -35,7 +35,10 @@ export function saveNotes(note){
     database.push(note);
   }
 }
-
+//find the child note and update with the new note.
+export function editNote(id, note){
+  return dispatch => database.child(id).update(note);
+}
 export function deleteNote(id){
   return dispatch => database.child(id).remove();
 }
